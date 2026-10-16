@@ -1,0 +1,32 @@
+[
+  {
+    "question": "How much does the Pro plan cost?",
+    "reference_answer": "The Pro plan costs $8 per month.",
+    "expected_keywords": ["$8", "per month"]
+  },
+  {
+    "question": "What encryption is used for notes at rest?",
+    "reference_answer": "Notes are encrypted at rest using AES-256.",
+    "expected_keywords": ["AES-256", "at rest"]
+  },
+  {
+    "question": "What is the support response time for the Team plan?",
+    "reference_answer": "Team plan customers receive priority support with a 4-hour response time.",
+    "expected_keywords": ["4-hour", "priority"]
+  },
+  {
+    "question": "How much storage does the Free plan include?",
+    "reference_answer": "The Free plan includes 2 GB of storage.",
+    "expected_keywords": ["2 GB"]
+  },
+  {
+    "question": "Is two-factor authentication available on the free plan?",
+    "reference_answer": "Yes, two-factor authentication is available on every plan, including the free plan.",
+    "expected_keywords": ["two-factor", "free"]
+  },
+  {
+    "question": "How fast is the smart search?",
+    "reference_answer": "Smart search returns results in under 100 milliseconds.",
+    "expected_keywords": ["100 milliseconds"]
+  }
+]

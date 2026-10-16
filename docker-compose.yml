@@ -1,0 +1,19 @@
+services:
+  backend:
+    build: ./backend
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "4200:80"
+    restart: unless-stopped
+# Postgres + pgvector is provided by Neon (free cloud) via DATABASE_URL in backend/.env,
+# so no local database service is required. To run Postgres locally instead, add a
+# `db` service using the `pgvector/pgvector:pg16` image and point DATABASE_URL at it.

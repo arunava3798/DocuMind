@@ -1,0 +1,15 @@
+# Secrets & local state (never bake into the image)
+.env
+index/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Dev-only
+tests/
+.mypy_cache/

@@ -1,0 +1,65 @@
+<section class="chat">
+  <div class="messages">
+    @for (message of messages(); track $index) {
+      <div class="message" [class.user]="message.role === 'user'" [class.assistant]="message.role === 'assistant'">
+        <div class="bubble">
+          <p class="text">{{ message.content }}</p>
+
+          @if (message.sources?.length) {
+            <details class="sources">
+              <summary>Sources ({{ message.sources!.length }})</summary>
+              @for (source of message.sources!; track $index) {
+                <div class="source">
+                  <span class="source-name">{{ source.source }}</span>
+                  <span class="source-text">{{ source.content }}</span>
+                </div>
+              }
+            </details>
+          }
+
+          @if (message.meta) {
+            <div class="meta">
+              @if (message.meta.processTimeMs) {
+                <span>⏱ {{ message.meta.processTimeMs | number: '1.0-0' }} ms</span>
+              }
+              @if (message.meta.totalTokens) {
+                <span>🔢 {{ message.meta.totalTokens }} tokens</span>
+              }
+              @if (message.meta.estCostUsd !== undefined) {
+                <span>💲 {{ message.meta.estCostUsd | number: '1.6-6' }}</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    } @empty {
+      <div class="placeholder">
+        <h3>Ask your documents anything</h3>
+        <p>Upload files on the left, then ask a question. Answers are grounded in your documents and cite their sources.</p>
+      </div>
+    }
+
+    @if (loading()) {
+      <div class="message assistant">
+        <div class="bubble typing"><span></span><span></span><span></span></div>
+      </div>
+    }
+  </div>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  <form class="composer" (ngSubmit)="send()">
+    <input
+      type="text"
+      placeholder="Ask a question about your documents…"
+      [ngModel]="input()"
+      (ngModelChange)="input.set($event)"
+      name="question"
+      autocomplete="off"
+      [disabled]="loading()"
+    />
+    <button type="submit" class="send" [disabled]="loading() || !input().trim()">Send</button>
+  </form>
+</section>

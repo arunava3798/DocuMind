@@ -1,0 +1,35 @@
+<section class="panel">
+  <h2>Documents</h2>
+
+  <div class="uploader">
+    <input type="file" multiple accept=".pdf,.txt,.docx" (change)="onFiles($event)" />
+    <button class="primary" (click)="upload()" [disabled]="uploading() || !selected().length">
+      {{ uploading() ? 'Indexing…' : 'Upload & index' }}
+    </button>
+  </div>
+
+  @if (selected().length) {
+    <p class="hint">{{ selected().length }} file(s) selected</p>
+  }
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  <ul class="doc-list">
+    @for (doc of documents(); track doc.id) {
+      <li>
+        <div class="doc-info">
+          <span class="name" [title]="doc.filename">{{ doc.filename }}</span>
+          <span class="meta">
+            {{ doc.chunk_count }} chunks · {{ doc.size_bytes / 1024 | number: '1.0-1' }} KB ·
+            {{ doc.created_at | date: 'short' }}
+          </span>
+        </div>
+        <button class="danger" (click)="remove(doc.id)" title="Delete">✕</button>
+      </li>
+    } @empty {
+      <li class="empty">No documents yet. Upload a PDF, TXT, or DOCX to begin.</li>
+    }
+  </ul>
+</section>

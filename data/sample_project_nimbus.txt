@@ -1,0 +1,25 @@
+Project Nimbus — Internal Knowledge Base (Sample Document)
+
+Overview
+Project Nimbus is a fictional cloud-based note-taking application used here as sample
+data for a Retrieval-Augmented Generation (RAG) demo. It lets users capture notes,
+organize them into notebooks, and search across everything instantly.
+
+Core Features
+- Notebooks: Group related notes. Each user can create up to 200 notebooks on the free plan.
+- Smart Search: Full-text search returns results in under 100 milliseconds.
+- Offline Mode: Notes sync automatically when the device reconnects to the internet.
+- Sharing: Notebooks can be shared with a public read-only link or with specific people.
+
+Pricing
+- Free plan: 200 notebooks, 2 GB storage, and sharing via public links.
+- Pro plan: $8 per month, unlimited notebooks, 100 GB storage, and version history.
+- Team plan: $15 per user per month, with admin controls and single sign-on (SSO).
+
+Security
+All notes are encrypted at rest using AES-256 and in transit using TLS 1.3.
+Two-factor authentication (2FA) is available on every plan, including the free plan.
+
+Support
+Free and Pro users receive email support with a 48-hour response time.
+Team plan customers receive priority support with a 4-hour response time.
