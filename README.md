@@ -98,16 +98,22 @@ flowchart LR
 
 ## 🚀 Quickstart
 
-### Option A — Docker (whole stack)
+### Option A — Docker (whole stack, incl. database)
 
-Requires Docker Desktop running and a `backend/.env` (see below).
+Runs the frontend, backend, **and a local Postgres + pgvector database** — no cloud DB needed.
 
 ```bash
+cp backend/.env.example backend/.env    # then set GOOGLE_API_KEY (or use Ollama)
 docker compose up --build
 ```
 
 - Frontend → http://localhost:4200
 - Backend API docs → http://localhost:8000/docs
+
+The compose file provisions a `pgvector` database automatically and points the backend at it,
+so the only thing you must supply is an **LLM**: a free `GOOGLE_API_KEY`, or set
+`LLM_BACKEND=ollama` for a fully offline setup. (To use Neon/Supabase instead of the bundled
+database, comment out the `DATABASE_URL` override in `docker-compose.yml`.)
 
 ### Option B — Local dev
 

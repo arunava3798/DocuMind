@@ -1,8 +1,31 @@
 services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: documind
+      POSTGRES_PASSWORD: documind
+      POSTGRES_DB: documind
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U documind -d documind"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
   backend:
     build: ./backend
     env_file:
       - ./backend/.env
+    # Local Postgres overrides DATABASE_URL from .env, so the stack runs with no cloud DB.
+    # To use Neon/Supabase instead, comment out this `environment` block and set
+    # DATABASE_URL in backend/.env.
+    environment:
+      DATABASE_URL: postgresql://documind:documind@db:5432/documind
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "8000:8000"
     restart: unless-stopped
@@ -14,6 +37,6 @@ services:
     ports:
       - "4200:80"
     restart: unless-stopped
-# Postgres + pgvector is provided by Neon (free cloud) via DATABASE_URL in backend/.env,
-# so no local database service is required. To run Postgres locally instead, add a
-# `db` service using the `pgvector/pgvector:pg16` image and point DATABASE_URL at it.
+
+volumes:
+  pgdata:
