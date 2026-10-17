@@ -1,9 +1,12 @@
 """FastAPI application entrypoint."""
 from __future__ import annotations
 
+from pathlib import Path
+
 from dotenv import load_dotenv
 
-load_dotenv()
+# Load backend/.env by absolute path so it works regardless of the current directory.
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 from contextlib import asynccontextmanager  # noqa: E402
 from time import perf_counter  # noqa: E402

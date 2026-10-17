@@ -1,4 +1,4 @@
-# 🤖 RAG Document Chatbot — Full-Stack RAG Platform
+# � DocuMind — Full-Stack RAG Platform
 
 A production-style **Retrieval-Augmented Generation** platform: upload documents, then ask
 questions answered **only from their content**, with cited sources, hybrid retrieval,

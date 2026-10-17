@@ -11,7 +11,7 @@ class Settings(BaseSettings):
         env_file=".env", env_file_encoding="utf-8", extra="ignore"
     )
 
-    app_name: str = "RAG Platform API"
+    app_name: str = "DocuMind API"
 
     # LLM provider: "gemini" | "ollama"
     llm_backend: str = "gemini"

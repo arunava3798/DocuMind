@@ -29,7 +29,12 @@ def init_engine():
         settings = get_settings()
         if not settings.database_url:
             raise RuntimeError("DATABASE_URL is not set. Add it to backend/.env.")
-        _engine = create_engine(normalize_db_url(settings.database_url), pool_pre_ping=True)
+        # pre_ping + recycle handle Neon's idle auto-suspend (stale/closed connections).
+        _engine = create_engine(
+            normalize_db_url(settings.database_url),
+            pool_pre_ping=True,
+            pool_recycle=300,
+        )
         _SessionLocal = sessionmaker(bind=_engine, autoflush=False, autocommit=False)
     return _engine
 

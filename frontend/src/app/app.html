@@ -1,7 +1,14 @@
 <div class="app-shell">
   <header class="topbar">
-    <h1>🤖 RAG Document Chatbot</h1>
-    <span class="subtitle">Hybrid retrieval · re-ranking · grounded answers with sources</span>
+    <h1><img src="favicon.svg" alt="" class="logo" /> DocuMind</h1>
+    <button
+      class="clear-chat"
+      (click)="clearChat()"
+      [disabled]="!chatRef()?.messages()?.length"
+      title="Clear the conversation history"
+    >
+      ↺ New chat
+    </button>
   </header>
 
   <main class="layout">

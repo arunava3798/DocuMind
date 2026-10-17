@@ -2,13 +2,22 @@
   <h2>Documents</h2>
 
   <div class="uploader">
-    <input type="file" multiple accept=".pdf,.txt,.docx" (change)="onFiles($event)" />
+    <input type="file" multiple accept=".pdf,.txt,.docx,.xls,.xlsx,.pptx" (change)="onFiles($event)" [disabled]="uploading()" />
     <button class="primary" (click)="upload()" [disabled]="uploading() || !selected().length">
       {{ uploading() ? 'Indexing…' : 'Upload & index' }}
     </button>
   </div>
 
-  @if (selected().length) {
+  @if (uploading()) {
+    <div class="indexing" role="status" aria-live="polite">
+      <span class="spinner"></span>
+      <div class="indexing-text">
+        <strong>Indexing your document…</strong>
+        <span class="indexing-sub">Extracting text, chunking &amp; embedding. This can take a moment.</span>
+        <div class="progress"><div class="progress-bar"></div></div>
+      </div>
+    </div>
+  } @else if (selected().length) {
     <p class="hint">{{ selected().length }} file(s) selected</p>
   }
 
@@ -29,7 +38,7 @@
         <button class="danger" (click)="remove(doc.id)" title="Delete">✕</button>
       </li>
     } @empty {
-      <li class="empty">No documents yet. Upload a PDF, TXT, or DOCX to begin.</li>
+      <li class="empty">No documents yet. Upload a PDF, Word, Excel, PowerPoint, or text file to begin.</li>
     }
   </ul>
 </section>

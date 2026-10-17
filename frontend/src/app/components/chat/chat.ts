@@ -24,6 +24,13 @@ export class Chat {
   loading = signal(false);
   error = signal<string | null>(null);
 
+  clear(): void {
+    this.messages.set([]);
+    this.input.set('');
+    this.error.set(null);
+    this.loading.set(false);
+  }
+
   send(): void {
     const question = this.input().trim();
     if (!question || this.loading()) {

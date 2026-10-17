@@ -7,7 +7,7 @@ from langchain_core.documents import Document
 from langchain_postgres import PGVector
 
 from ..config import get_settings
-from ..db.database import normalize_db_url
+from ..db.database import init_engine
 from .embeddings import get_embeddings
 
 
@@ -16,10 +16,11 @@ def get_vectorstore() -> PGVector:
     settings = get_settings()
     if not settings.database_url:
         raise RuntimeError("DATABASE_URL is not set. Add it to backend/.env.")
+    # Reuse the shared pre-ping/recycle engine so PGVector survives Neon idle suspends.
     return PGVector(
         embeddings=get_embeddings(),
         collection_name=settings.pg_collection_name,
-        connection=normalize_db_url(settings.database_url),
+        connection=init_engine(),
         use_jsonb=True,
     )
 

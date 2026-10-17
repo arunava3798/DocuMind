@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 
 import { Chat } from './components/chat/chat';
 import { DocumentManager } from './components/document-manager/document-manager';
@@ -10,5 +10,10 @@ import { DocumentManager } from './components/document-manager/document-manager'
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = 'RAG Platform';
+  protected readonly title = 'DocuMind';
+  readonly chatRef = viewChild(Chat);
+
+  clearChat(): void {
+    this.chatRef()?.clear();
+  }
 }
