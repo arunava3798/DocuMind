@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 from functools import lru_cache
+from typing import Annotated
 
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import field_validator
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -53,8 +55,15 @@ class Settings(BaseSettings):
     gemini_input_cost_per_mtok: float = 0.10
     gemini_output_cost_per_mtok: float = 0.40
 
-    # CORS (Angular dev server by default)
-    cors_origins: list[str] = ["http://localhost:4200"]
+    # CORS (Angular dev server by default). Override via CORS_ORIGINS="https://a.com,https://b.com".
+    cors_origins: Annotated[list[str], NoDecode] = ["http://localhost:4200"]
+
+    @field_validator("cors_origins", mode="before")
+    @classmethod
+    def _split_cors_origins(cls, value):
+        if isinstance(value, str):
+            return [origin.strip() for origin in value.split(",") if origin.strip()]
+        return value
 
 
 @lru_cache
