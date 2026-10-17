@@ -98,6 +98,12 @@ flowchart LR
 
 ## 🚀 Quickstart
 
+> **You bring your own credentials.** This repo never ships anyone's keys or database —
+> `backend/.env` is gitignored. Each person runs DocuMind with **their own** LLM (a free
+> Gemini key *or* local Ollama) and **their own** database (the bundled local Postgres,
+> *or* a free Neon/Supabase URL). You start from `backend/.env.example`, which has blank
+> placeholders.
+
 ### Option A — Docker (whole stack, incl. database)
 
 Runs the frontend, backend, **and a local Postgres + pgvector database** — no cloud DB needed.
