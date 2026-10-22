@@ -111,7 +111,8 @@
 .composer {
   display: flex;
   gap: 0.6rem;
-  padding: 0.75rem 0.5rem 0.25rem;
+  // Extra bottom space keeps the input/Send clear of the "Powered by Netlify" badge.
+  padding: 0.75rem 0.5rem 3rem;
 
   input {
     flex: 1;
