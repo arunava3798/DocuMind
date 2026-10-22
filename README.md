@@ -98,51 +98,72 @@ flowchart LR
 
 ---
 
-## 🚀 Quickstart
+## �️ Run it locally (from a fresh clone)
 
-> **You bring your own credentials.** This repo never ships anyone's keys or database —
-> `backend/.env` is gitignored. Each person runs DocuMind with **their own** LLM (a free
-> Gemini key *or* local Ollama) and **their own** database (the bundled local Postgres,
-> *or* a free Neon/Supabase URL). You start from `backend/.env.example`, which has blank
-> placeholders.
+> **You bring your own credentials.** This repo ships **no** keys or database — `backend/.env`
+> is gitignored. You run DocuMind with **your own** LLM (a free Gemini key *or* local Ollama)
+> and **your own** database (the bundled local Postgres, *or* a free Neon URL). Start by copying
+> `backend/.env.example` → `backend/.env` and filling in the blanks.
 
-### Option A — Docker (whole stack, incl. database)
+### Prerequisites
+- **Git**
+- **Easiest path:** Docker Desktop
+- **Manual path:** Python 3.11+ and Node.js 20+
+- An **LLM**: a free [Gemini API key](https://aistudio.google.com/app/apikey) *or* [Ollama](https://ollama.com) (offline, no key)
 
-Runs the frontend, backend, **and a local Postgres + pgvector database** — no cloud DB needed.
+### What you must provide
+| Need | Options |
+| ---- | ------- |
+| **LLM** | Gemini key (`GOOGLE_API_KEY`) **or** Ollama (`LLM_BACKEND=ollama`, no key) |
+| **Database** | Bundled local Postgres (Docker) **or** a free [Neon](https://neon.tech) `DATABASE_URL` |
+| **Embeddings** | Nothing — a free local model downloads automatically (default) |
 
+### 1. Clone
 ```bash
-cp backend/.env.example backend/.env    # then set GOOGLE_API_KEY (or use Ollama)
-docker compose up --build
+git clone https://github.com/arunava3798/DocuMind.git
+cd DocuMind
 ```
 
-- Frontend → http://localhost:4200
-- Backend API docs → http://localhost:8000/docs
+### Option A — Docker (easiest: whole stack incl. database)
+Spins up the frontend, backend, **and a local Postgres + pgvector database** — no cloud DB needed.
+```bash
+cp backend/.env.example backend/.env     # then set GOOGLE_API_KEY (or LLM_BACKEND=ollama)
+docker compose up --build
+```
+- App → http://localhost:4200
+- API docs → http://localhost:8000/docs
 
-The compose file provisions a `pgvector` database automatically and points the backend at it,
-so the only thing you must supply is an **LLM**: a free `GOOGLE_API_KEY`, or set
-`LLM_BACKEND=ollama` for a fully offline setup. (To use Neon/Supabase instead of the bundled
-database, comment out the `DATABASE_URL` override in `docker-compose.yml`.)
+The compose file provisions the database and points the backend at it automatically, so the only
+thing you must supply is an **LLM**. (To use Neon instead of the bundled DB, comment out the
+`DATABASE_URL` override in `docker-compose.yml`.)
 
-### Option B — Local dev
+### Option B — Manual (run backend & frontend yourself)
 
-**1. Backend**
+**1. Database** — either run just the bundled DB with `docker compose up db`, or create a free
+[Neon](https://neon.tech) project and copy its connection string.
 
+**2. Backend** (terminal 1):
 ```bash
 cd backend
 python -m venv .venv
-.venv\Scripts\Activate.ps1        # Windows (use source .venv/bin/activate on macOS/Linux)
+.venv\Scripts\Activate.ps1          # Windows
+# source .venv/bin/activate         # macOS/Linux
 pip install -r requirements.txt
-copy .env.example .env             # then fill in GOOGLE_API_KEY and DATABASE_URL
+copy .env.example .env              # cp on macOS/Linux — then set GOOGLE_API_KEY and DATABASE_URL
 uvicorn app.main:app --reload --port 8000
 ```
 
-**2. Frontend** (in a second terminal)
-
+**3. Frontend** (terminal 2):
 ```bash
 cd frontend
 npm install
-npm start                          # http://localhost:4200
+npm start
 ```
+
+**4.** Open **http://localhost:4200**, upload a PDF / Word / Excel / PowerPoint / TXT file, and ask
+away. (First question downloads the small embedding model, ~90 MB — one time.)
+
+> 💡 Prefer **no API keys at all**? See [Run fully offline (Ollama)](#-run-fully-offline-ollama) below.
 
 ---
 
