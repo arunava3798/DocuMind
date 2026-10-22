@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  // Set at build/deploy time to the hosted backend URL.
-  apiBase: '',
+  // Hosted backend URL. Update this to match your Render service name if different.
+  apiBase: 'https://documind-api.onrender.com',
 };
