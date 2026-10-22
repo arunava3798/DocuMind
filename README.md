@@ -1,4 +1,6 @@
-# � DocuMind — Full-Stack RAG Platform
+# 🧠 DocuMind — Full-Stack RAG Platform
+
+**🔗 Live demo: [documindchat.netlify.app](https://documindchat.netlify.app)**
 
 A production-style **Retrieval-Augmented Generation** platform: upload documents, then ask
 questions answered **only from their content**, with cited sources, hybrid retrieval,
